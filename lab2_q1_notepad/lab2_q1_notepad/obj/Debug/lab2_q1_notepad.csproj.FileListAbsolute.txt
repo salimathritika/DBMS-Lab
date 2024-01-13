@@ -1,0 +1,9 @@
+D:\220953428\Lab 2\lab2_q1_notepad\lab2_q1_notepad\bin\Debug\lab2_q1_notepad.exe.config
+D:\220953428\Lab 2\lab2_q1_notepad\lab2_q1_notepad\bin\Debug\lab2_q1_notepad.exe
+D:\220953428\Lab 2\lab2_q1_notepad\lab2_q1_notepad\bin\Debug\lab2_q1_notepad.pdb
+D:\220953428\Lab 2\lab2_q1_notepad\lab2_q1_notepad\obj\Debug\lab2_q1_notepad.csprojResolveAssemblyReference.cache
+D:\220953428\Lab 2\lab2_q1_notepad\lab2_q1_notepad\obj\Debug\lab2_q1_notepad.Form1.resources
+D:\220953428\Lab 2\lab2_q1_notepad\lab2_q1_notepad\obj\Debug\lab2_q1_notepad.Properties.Resources.resources
+D:\220953428\Lab 2\lab2_q1_notepad\lab2_q1_notepad\obj\Debug\lab2_q1_notepad.csproj.GenerateResource.Cache
+D:\220953428\Lab 2\lab2_q1_notepad\lab2_q1_notepad\obj\Debug\lab2_q1_notepad.exe
+D:\220953428\Lab 2\lab2_q1_notepad\lab2_q1_notepad\obj\Debug\lab2_q1_notepad.pdb
