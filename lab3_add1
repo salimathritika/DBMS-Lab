@@ -1,0 +1,41 @@
+create table customer(
+  2  cust# int, cname varchar(50),city varchar(30)
+  3  ,primary key(cust#));
+
+Table created.
+
+SQL> create table orders(
+  2  order# int,odate date,cust# int,ordamt int,
+  3  primary key(order#));
+
+Table created.
+
+SQL> create table item(
+  2  item# int,unitprice int,
+  3  primary key(item#));
+
+Table created.
+
+SQL> create table order_items(
+  2  order# int,item# int,qty int,
+  3  foreign key(order#) references orders on delete set null,
+  4  foreign key(item#) references item on delete set null);
+
+Table created.
+
+SQL> create table shipment(
+  2  order# int, warehouse# int, shipdate date,
+  3  primary key(warehouse#),
+  4  foreign key(order#) references orders on delete set null);
+
+Table created.
+
+SQL> create table warehouse(
+  2  warehouse# int,city varchar(30),
+  3  foreign key(warehouse#) references shipment on delete set null);
+
+Table created.
+
+SQL> commit;
+
+Commit complete.
