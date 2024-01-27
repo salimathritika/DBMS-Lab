@@ -1,0 +1,503 @@
+
+SQL> create table person(
+  2  driver_id# varchar(30), name varchar(50), address varchar(100),
+  3  primary key(driver_id#));
+
+Table created.
+
+SQL> desc person schema
+Usage: DESCRIBE [schema.]object[@db_link]
+SQL> desc person-schema
+SP2-0565: Illegal identifier.
+SQL> desc person schema
+Usage: DESCRIBE [schema.]object[@db_link]
+SQL> desc person
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DRIVER_ID#                                NOT NULL VARCHAR2(30)
+ NAME                                               VARCHAR2(50)
+ ADDRESS                                            VARCHAR2(100)
+
+SQL> create table car(
+  2  regno varchar(20), model varchar(30), year int,
+  3  primary key(regno));
+
+Table created.
+
+SQL> create table accident(
+  2  report_number int,accd_date date, location varchar(50),
+  3  primary key(report_number));
+
+Table created.
+
+SQL> create table owns(
+  2  driver_id# varchar(30),regno varchar(20),
+  3  foreign key(driver_id#) references person on delete set null,
+  4  foreign key(regno) references car on delete set null);
+
+Table created.
+
+SQL> create table participated(
+  2  driver_id# varchar(30), regno varchar(20), report_number int, damage_amount int,
+  3  foreign key(driver_id#) references person on delete set null,
+  4  foreign key(regno) references car on delete set null,
+  5  foreign key(report_number) references accident on delete set null);
+
+Table created.
+
+SQL> insert into person values('1234','Rahul','107, Raj apt,Mumbai');
+
+1 row created.
+
+SQL> insert into person values('4567','Ajay','211,Pristine apartment,Delhi');
+
+1 row created.
+
+SQL> desc person
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DRIVER_ID#                                NOT NULL VARCHAR2(30)
+ NAME                                               VARCHAR2(50)
+ ADDRESS                                            VARCHAR2(100)
+
+SQL> select * from person
+  2  ;
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1234
+Rahul
+107, Raj apt,Mumbai
+
+4567
+Ajay
+211,Pristine apartment,Delhi
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+
+
+SQL> delete from person where name='Ajay';
+
+1 row deleted.
+
+SQL> select * from person;
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1234
+Rahul
+107, Raj apt,Mumbai
+
+
+SQL> insert into person values('4567','Ajay','211,Pristine apartment,Delhi');
+
+1 row created.
+
+SQL> insert into person values('8910','Hrithik','111,Hills apt,Bangalore');
+
+1 row created.
+
+SQL> insert into person values('5678','Deepika','720,Pyramid apt,Pune');
+
+1 row created.
+
+SQL> insert into person values('4321','Aditya','727,Royal apt,Bangalore');
+
+1 row created.
+
+SQL> select * from person;
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1234
+Rahul
+107, Raj apt,Mumbai
+
+4567
+Ajay
+211,Pristine apartment,Delhi
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+
+8910
+Hrithik
+111,Hills apt,Bangalore
+
+5678
+Deepika
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+720,Pyramid apt,Pune
+
+4321
+Aditya
+727,Royal apt,Bangalore
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into car values('MH4041','Kia',1998);
+
+1 row created.
+
+SQL> insert into car values('HR7081','Scorpio',2000);
+
+1 row created.
+
+SQL> insert into car values('KA5052','Dzire',2012);
+
+1 row created.
+
+SQL> insert into car values('MH9111','Fiat',2009);
+
+1 row created.
+
+SQL> insert into car values('KA9999','Porsche',2004);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from car;
+
+REGNO                MODEL                                YEAR
+-------------------- ------------------------------ ----------
+MH4041               Kia                                  1998
+HR7081               Scorpio                              2000
+KA5052               Dzire                                2012
+MH9111               Fiat                                 2009
+KA9999               Porsche                              2004
+
+SQL> insert into accident values(9,04-011-2000,'Mumbai');
+insert into accident values(9,04-011-2000,'Mumbai')
+                                    *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected DATE got NUMBER
+
+
+SQL> insert into accident values(9,'04-011-2000','Mumbai');
+insert into accident values(9,'04-011-2000','Mumbai')
+                              *
+ERROR at line 1:
+ORA-01843: not a valid month
+
+
+SQL> desc accident
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REPORT_NUMBER                             NOT NULL NUMBER(38)
+ ACCD_DATE                                          DATE
+ LOCATION                                           VARCHAR2(50)
+
+SQL> insert into accident values(9,'04-11-2000','Mumbai');
+insert into accident values(9,'04-11-2000','Mumbai')
+                              *
+ERROR at line 1:
+ORA-01843: not a valid month
+
+
+SQL> insert into accident values(9,'04-nov-2000','Mumbai');
+
+1 row created.
+
+SQL> insert into accident values(5,'07-sep-2002','Delhi');
+
+1 row created.
+
+SQL> insert into accident values(16,'11-dec-2016','Bangalore');
+
+1 row created.
+
+SQL> insert into accident values(17,'27-may-2011','Pune');
+
+1 row created.
+
+SQL> insert into accident values(12,'14-apr-2005','Bangalore');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           16 11-DEC-16 Bangalore
+           17 27-MAY-11 Pune
+           12 14-APR-05 Bangalore
+
+SQL> select * from owns;
+
+no rows selected
+
+SQL> insert into owns values('1234','MH4041');
+
+1 row created.
+
+SQL> insert into owns values('4567','HR7081');
+
+1 row created.
+
+SQL> insert into owns values('8910','KA5052');
+
+1 row created.
+
+SQL> insert into owns values('5678','MH9111');
+
+1 row created.
+
+SQL> insert into owns values('4321','KA9999');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into participated values('1234','MH4041',9,10000);
+
+1 row created.
+
+SQL> insert into participated values('4567','HR7081',5,12000);
+
+1 row created.
+
+SQL> insert into participated values('8910','KA5052',16,15000);
+
+1 row created.
+
+SQL> insert into participated values('5678','MH9111',17,16000);
+
+1 row created.
+
+SQL> insert into participated values('4321','KA9999',12,20000);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from participated;
+
+DRIVER_ID#                     REGNO                REPORT_NUMBER DAMAGE_AMOUNT
+------------------------------ -------------------- ------------- -------------
+1234                           MH4041                           9         10000
+4567                           HR7081                           5         12000
+8910                           KA5052                          16         15000
+5678                           MH9111                          17         16000
+4321                           KA9999                          12         20000
+
+SQL> update participated set damage_amount=25000,where report_number=12;
+update participated set damage_amount=25000,where report_number=12
+                                            *
+ERROR at line 1:
+ORA-01747: invalid user.table.column, table.column, or column specification
+
+
+SQL> update participated set damage_amount=25000,where participated.report_number=12;
+update participated set damage_amount=25000,where participated.report_number=12
+                                            *
+ERROR at line 1:
+ORA-01747: invalid user.table.column, table.column, or column specification
+
+
+SQL> update participated set damage_amount=25000 where report_number=12;
+
+1 row updated.
+
+SQL> select * from participated;
+
+DRIVER_ID#                     REGNO                REPORT_NUMBER DAMAGE_AMOUNT
+------------------------------ -------------------- ------------- -------------
+1234                           MH4041                           9         10000
+4567                           HR7081                           5         12000
+8910                           KA5052                          16         15000
+5678                           MH9111                          17         16000
+4321                           KA9999                          12         25000
+
+SQL> alter table person add age int;
+
+Table altered.
+
+SQL> select * from person;
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+       AGE
+----------
+1234
+Rahul
+107, Raj apt,Mumbai
+
+
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+       AGE
+----------
+4567
+Ajay
+211,Pristine apartment,Delhi
+
+
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+       AGE
+----------
+8910
+Hrithik
+111,Hills apt,Bangalore
+
+
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+       AGE
+----------
+5678
+Deepika
+720,Pyramid apt,Pune
+
+
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+       AGE
+----------
+4321
+Aditya
+727,Royal apt,Bangalore
+
+
+
+SQL> alter table person drop age;
+alter table person drop age
+                        *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> alter table person drop column age;
+
+Table altered.
+
+SQL> select * from person
+  2  ;
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1234
+Rahul
+107, Raj apt,Mumbai
+
+4567
+Ajay
+211,Pristine apartment,Delhi
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+
+8910
+Hrithik
+111,Hills apt,Bangalore
+
+5678
+Deepika
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+720,Pyramid apt,Pune
+
+4321
+Aditya
+727,Royal apt,Bangalore
+
+
+SQL> delete from accident where extract(year from accd_year)=2016 ;
+delete from accident where extract(year from accd_year)=2016
+                                             *
+ERROR at line 1:
+ORA-00904: "ACCD_YEAR": invalid identifier
+
+
+SQL> delete from accident where extract(year from accd_date)=2016 ;
+
+1 row deleted.
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           17 27-MAY-11 Pune
+           12 14-APR-05 Bangalore
