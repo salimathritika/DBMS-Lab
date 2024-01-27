@@ -501,3 +501,99 @@ REPORT_NUMBER ACCD_DATE LOCATION
             5 07-SEP-02 Delhi
            17 27-MAY-11 Pune
            12 14-APR-05 Bangalore
+
+SQL> delete from accident where location='Mumbai' and location='Delhi' and location='Pune' and location='Bangalore';
+
+0 rows deleted.
+
+SQL> select * from accident
+  2  ;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           17 27-MAY-11 Pune
+           12 14-APR-05 Bangalore
+
+SQL> delete from accident where location='Mumbai';
+
+1 row deleted.
+
+SQL> delete from accident where location='Delhi';
+
+1 row deleted.
+
+SQL> delete from accident where location='Pune';
+
+1 row deleted.
+
+SQL> delete from accident where location='Bangalore';
+
+1 row deleted.
+
+SQL> select * from accident;
+
+no rows selected
+
+SQL> insert into accident values(9,to_date('2000-nov-04','yyyy-mmm-dd'),Mumbai);
+insert into accident values(9,to_date('2000-nov-04','yyyy-mmm-dd'),Mumbai)
+                                                                   *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into accident values(9,to_date('2000-nov-04','yyyy-mmm-dd'),'Mumbai');
+insert into accident values(9,to_date('2000-nov-04','yyyy-mmm-dd'),'Mumbai')
+                                                    *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> insert into accident values(9,to_date('2000-11-04','yyyy-mm-dd'),'Mumbai');
+
+1 row created.
+
+SQL> insert into accident values(5,to_date('2002-09-07','yyyy-mm-dd'),'Delhi');
+
+1 row created.
+
+SQL> insert into accident values(16,to_date('2016-12-11','yyyy-mm-dd'),'Bangalore');
+
+1 row created.
+
+SQL> insert into accident values(17,to_date('2011-05-27','yyyy-mm-dd'),'Pune');
+
+1 row created.
+
+SQL> insert into accident values(12,to_date('2005-04-04','yyyy-mm-dd'),'Bangalore');
+
+1 row created.
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           16 11-DEC-16 Bangalore
+           17 27-MAY-11 Pune
+           12 04-APR-05 Bangalore
+
+SQL> delete from accident where extract(year from accd_date)=2016;
+
+1 row deleted.
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           17 27-MAY-11 Pune
+           12 04-APR-05 Bangalore
+
+SQL> commit;
+
+Commit complete.
+
