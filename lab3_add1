@@ -56,3 +56,4 @@ select order# from (shipment natural join warehouse) where warehouse.city like '
     ORDER#
 ----------
         61
+c) have to use nested quesries
