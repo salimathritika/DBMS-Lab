@@ -39,3 +39,14 @@ Table created.
 SQL> commit;
 
 Commit complete.
+
+ select cname as CUSTNAME,count(order#) as No_Of_Orders, avg(ordamt) as AVG_ORDER_AMT from (customer natural join orders)
+  2  group by cname;
+
+CUSTNAME                                           NO_OF_ORDERS AVG_ORDER_AMT
+-------------------------------------------------- ------------ -------------
+Vivek                                                         1          1500
+Rahul                                                         1           500
+Aditya                                                        1          1000
+Madhuri                                                       1          2000
+Raj                                                           1          1800
