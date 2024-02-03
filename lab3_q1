@@ -597,3 +597,24 @@ SQL> commit;
 
 Commit complete.
 
+ alter table car add constraint check_const check (year>1980);
+
+Table altered.
+
+SQL> select * from car;
+
+REGNO                MODEL                                YEAR
+-------------------- ------------------------------ ----------
+MH4041               Kia                                  1998
+HR7081               Scorpio                              2000
+KA5052               Dzire                                2012
+MH9111               Fiat                                 2009
+KA9999               Porsche                              2004
+
+SQL> insert into car values('rgjhe','efef',1979);
+insert into car values('rgjhe','efef',1979)
+*
+ERROR at line 1:
+ORA-02290: check constraint (CCE428.CHECK_CONST) violated
+
+
