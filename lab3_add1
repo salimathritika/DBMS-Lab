@@ -50,3 +50,9 @@ Rahul                                                         1           500
 Aditya                                                        1          1000
 Madhuri                                                       1          2000
 Raj                                                           1          1800
+
+select order# from (shipment natural join warehouse) where warehouse.city like 'Punjab';
+
+    ORDER#
+----------
+        61
