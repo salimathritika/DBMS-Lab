@@ -1,0 +1,446 @@
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Sat Feb 3 14:02:18 2024
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: cce428@ictorcl
+Enter password:
+Last Successful login time: Sat Jan 27 2024 14:16:12 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> select * from accident
+  2  ;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           17 27-MAY-11 Pune
+           12 04-APR-05 Bangalore
+
+SQL> select * from person;
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1234
+Rahul
+107, Raj apt,Mumbai
+
+4567
+Ajay
+211,Pristine apartment,Delhi
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+
+8910
+Hrithik
+111,Hills apt,Bangalore
+
+5678
+Deepika
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+720,Pyramid apt,Pune
+
+4321
+Aditya
+727,Royal apt,Bangalore
+
+
+SQL> select * from owns
+  2  ;
+
+DRIVER_ID#                     REGNO
+------------------------------ --------------------
+1234                           MH4041
+4567                           HR7081
+8910                           KA5052
+5678                           MH9111
+4321                           KA9999
+
+SQL> select * from participated
+  2  ;
+
+DRIVER_ID#                     REGNO                REPORT_NUMBER DAMAGE_AMOUNT
+------------------------------ -------------------- ------------- -------------
+1234                           MH4041                                     10000
+4567                           HR7081                                     12000
+8910                           KA5052                                     15000
+5678                           MH9111                                     16000
+4321                           KA9999                                     25000
+
+SQL> drop participated;
+drop participated
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop table participated
+  2  ;
+
+Table dropped.
+
+SQL> select * from person;
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1234
+Rahul
+107, Raj apt,Mumbai
+
+4567
+Ajay
+211,Pristine apartment,Delhi
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+
+8910
+Hrithik
+111,Hills apt,Bangalore
+
+5678
+Deepika
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+720,Pyramid apt,Pune
+
+4321
+Aditya
+727,Royal apt,Bangalore
+
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           17 27-MAY-11 Pune
+           12 04-APR-05 Bangalore
+
+SQL> create table participated(
+  2  driver_id# varchar(30), regno varchar(20), report_number int, damage_amount int,
+  3  foreign key(driver_id#) references person on delete cascade,
+  4  foreign key(regno) references car on delete cascade,
+  5  foreign key(report_number) references accident on delete cascade);
+
+Table created.
+
+SQL> insert into participated values('1234','MH4041',9,10000);
+
+1 row created.
+
+SQL> insert into participated values('4567','HR7081',5,12000);
+
+1 row created.
+
+SQL> insert into participated values('8910','KA5052',16,15000);
+insert into participated values('8910','KA5052',16,15000)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CCE428.SYS_C0043303) violated - parent key not
+found
+
+
+SQL> insert into participated values('8910','KA5052',16,15000);
+insert into participated values('8910','KA5052',16,15000)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CCE428.SYS_C0043303) violated - parent key not
+found
+
+
+SQL> insert into participated values('5678','MH9111',17,16000);
+
+1 row created.
+
+SQL> insert into participated values('4321','KA9999',12,20000);
+
+1 row created.
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           17 27-MAY-11 Pune
+           12 04-APR-05 Bangalore
+
+SQL> select * from customer;
+
+no rows selected
+
+SQL> desc customer
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUST#                                     NOT NULL NUMBER(38)
+ CNAME                                              VARCHAR2(50)
+ CITY                                               VARCHAR2(30)
+
+SQL> ;
+  1* select * from customer
+SQL> drop table customer;
+
+Table dropped.
+
+SQL> drop table orders;
+drop table orders
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys
+
+
+SQL> drop table warehouse;
+
+Table dropped.
+
+SQL> drop table shipment;
+
+Table dropped.
+
+SQL> drop table order_items;
+
+Table dropped.
+
+SQL> drop table items;
+drop table items
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> drop table orders;
+
+Table dropped.
+
+SQL> drop table items;
+drop table items
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> drop table item;
+
+Table dropped.
+
+SQL> create table customer(
+  2  cust# int, cname varchar(50), city varchar(30),
+  3  primary key(cust#));
+
+Table created.
+
+SQL> create table orders(
+  2  order# int, odate date, cust# int, ordamt int,
+  3  primary key(order#));
+
+Table created.
+
+SQL> create table item(
+  2  item# int, unitprice int,
+  3  primary key(item#));
+
+Table created.
+
+SQL> create table order_items(
+  2  order# int, item# int, qty int,
+  3  foreign key(order#) references orders on delete cascade,
+  4  foreign key(item#) references item on delete cascade);
+
+Table created.
+
+SQL> create table shipment(
+  2  order# int, warehouse# int, shipdate date,
+  3  primary key(warehouse#),
+  4  foreign key(order#) references orders on delete cascade);
+
+Table created.
+
+SQL> create table warehouse(
+  2  warehouse# int, city varchar(30),
+  3  foreign key(warehouse#) references shipment on delete cascade);
+
+Table created.
+
+SQL> insert into customer(
+  2  1,'Aditya','Bangalore');
+1,'Aditya','Bangalore')
+*
+ERROR at line 2:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into customer values(1,'Aditya','Bangalore');
+
+1 row created.
+
+SQL> insert into customer values(2,'Rahul','Mumbai');
+
+1 row created.
+
+SQL> insert into customer values(3,'Vivek','Pune');
+
+1 row created.
+
+SQL> insert into customer values(4,'Madhuri','Chennai');
+
+1 row created.
+
+SQL> insert into customer values(5,'Raj','Lucknow');
+
+1 row created.
+
+SQL> insert into orders values(57,to_date('2023-02-12','yyyy-mm-dd'),1,1000);
+
+1 row created.
+
+SQL> insert into orders values(60,to_date('2023-02-15','yyyy-mm-dd'),2,500);
+
+1 row created.
+
+SQL> insert into orders values(61,to_date('2023-03-17','yyyy-mm-dd'),3,1500);
+
+1 row created.
+
+SQL> insert into orders values(62,to_date('2023-03-27','yyyy-mm-dd'),4,2000);
+
+1 row created.
+
+SQL> insert into orders values(63,to_date('2023-04-23','yyyy-mm-dd'),5,1800);
+
+1 row created.
+
+SQL> insert into item values(78,1000);
+
+1 row created.
+
+SQL> insert into item values(90,250);
+
+1 row created.
+
+SQL> insert into item values(42,500);
+
+1 row created.
+
+SQL> insert into item values(30,400);
+
+1 row created.
+
+SQL> insert into item values(69,600);
+
+1 row created.
+
+SQL> insert into order_items values(57,78,1);
+
+1 row created.
+
+SQL> insert into order_items values(60,90,2);
+
+1 row created.
+
+SQL> insert into order_items values(61,42,3);
+
+1 row created.
+
+SQL> insert into order_items values(62,30,5);
+
+1 row created.
+
+SQL> insert into order_items values(63,69,3);
+
+1 row created.
+
+SQL> insert into shipment values(57,1000,to_date('2023-04-27','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into shipment values(60,1001,to_date('2023-04-28','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into shipment values(61,1002,to_date('2023-04-29','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into shipment values(62,1003,to_date('2023-04-30','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into shipment values(63,1004,to_date('2023-04-31','yyyy-mm-dd'));
+insert into shipment values(63,1004,to_date('2023-04-31','yyyy-mm-dd'))
+                                            *
+ERROR at line 1:
+ORA-01839: date not valid for month specified
+
+
+SQL> insert into shipment values(63,1004,to_date('2023-05-01','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into warehouse values(1000,'Bangalore');
+
+1 row created.
+
+SQL> insert into warehouse values(1001,'Mumbai');
+
+1 row created.
+
+SQL> insert into warehouse values(1002,'Pune');
+
+1 row created.
+
+SQL> insert into warehouse values(1003,'Chennai');
+
+1 row created.
+
+SQL> insert into warehouse values(1004,'Lucknow');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> delete from accident where extract(year from accd_date)=2016 ;
+
+0 rows deleted.
+
+SQL>
