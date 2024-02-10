@@ -29,3 +29,4 @@ SQL> create table text(
   3  foreign key(book_isbn) references book_adoption on delete cascade);
 
 Table created.
+
