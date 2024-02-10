@@ -1,0 +1,1 @@
+1) select count(*) as TotPeople from accident where (extract(year from accd_date)=2008); //may need to modify but works
