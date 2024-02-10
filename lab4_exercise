@@ -1,1 +1,14 @@
 1) select count(*) as TotPeople from accident where (extract(year from accd_date)=2008); //may need to modify but works
+
+3) select name, count(*) as no_of_accidents, sum(damage_amount) as Total_damage
+  2      from (person natural join participated)
+  3      group by name
+  4      order by Total_damage desc;
+
+NAME                                               NO_OF_ACCIDENTS TOTAL_DAMAGE
+-------------------------------------------------- --------------- ------------
+Aditya                                                           1        20000
+Deepika                                                          1        16000
+Ajay                                                             1        12000
+Rahul                                                            1        10000
+
