@@ -13,7 +13,7 @@ namespace lab2_q2
         
     public partial class Form1 : Form
     {
-
+        string pswd = "1234";
 
         public Form1()
         {
@@ -37,13 +37,28 @@ namespace lab2_q2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text == "user" && textBox2.Text == "1234")
+            if (textBox1.Text == "user" && textBox2.Text == pswd)
             {
                 Form2 frm=new Form2();
                 frm.Show();
             }
             else
                 MessageBox.Show("Wrong user name or password");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            pswd = textBox3.Text;
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
