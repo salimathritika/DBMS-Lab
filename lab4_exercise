@@ -1,5 +1,14 @@
 1) select count(*) as TotPeople from accident where (extract(year from accd_date)=2008); //may need to modify but works
 
+2)SELECT COUNT(*) AS total_accidents
+FROM PARTICIPATED pa
+JOIN CAR c ON pa.regno = c.regno
+WHERE c.model = 'Kia';
+
+TOTAL_ACCIDENTS
+---------------
+              1
+
 3) select name, count(*) as no_of_accidents, sum(damage_amount) as Total_damage
   2      from (person natural join participated)
   3      group by name
@@ -12,3 +21,15 @@ Deepika                                                          1        16000
 Ajay                                                             1        12000
 Rahul                                                            1        10000
 
+5) SELECT o.driver_id#, p.name
+   FROM OWNS o
+   LEFT JOIN PARTICIPATED pa ON o.regno = pa.regno
+   JOIN PERSON p ON o.driver_id# = p.driver_id#
+   WHERE pa.regno IS NULL;
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+8910
+Hrithik
