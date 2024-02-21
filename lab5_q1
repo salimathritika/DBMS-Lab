@@ -89,7 +89,10 @@ Civil                28-NOV-05
 6789                 Beryl
 Physics              10-JAN-04
 
-select * from course;
+1010                 Anna
+Psychology           27-NOV-03
+
+ select * from course;
 
    COURSE# CNAME                          DEPT
 ---------- ------------------------------ ------------------------------
@@ -99,6 +102,7 @@ select * from course;
        133 Buildings                      Architecture
        455 Strength of material           Civil
        299 VLSI                           Electronics
+       454 Psych intro                    Psychology
 
 select * from enroll;
 
@@ -109,6 +113,7 @@ REGNO                   COURSE#
 3456                        299
 5678                        455
 6789                        102
+5678                        401
 
  select * from book_adoption;
 
@@ -119,6 +124,7 @@ REGNO                   COURSE#
        102          2       5898
        133          3       6969
        299          2       5252
+       454          2       1232
 
 select * from text;
 
@@ -161,6 +167,17 @@ Sally
       5252 VLSI concepts
 McGraw
 Robert
+
+      1232 Psychology for beginners
+
+ BOOK_ISBN BOOKTITLE
+---------- --------------------------------------------------
+PUBLISHER
+--------------------------------------------------
+AUTHOR
+--------------------------------------------------
+Fred
+Sigmund
 
 
 need to check below code
