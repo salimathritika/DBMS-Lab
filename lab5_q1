@@ -194,15 +194,15 @@ Computer Science
 
 c.
 //works
-select distinct regno
-from student
-where (select count(course#)
-       from enroll
-       where(enroll.regno=student.regno))>1;
+ select regno,name
+ from student
+ where (select count(distinct dept)
+        from course natural join (enroll)
+        where enroll.regno=student.regno)>1;
 
-REGNO
---------------------
-1234
+REGNO                NAME
+-------------------- --------------------------------------------------
+5678                 Santosh
 
 d.
 //works
