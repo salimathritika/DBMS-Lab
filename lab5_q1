@@ -272,9 +272,17 @@ FROM (
 WHERE num_books = (SELECT MAX(num_books) FROM (SELECT COUNT(*) AS num_books FROM ENROLL e JOIN BOOK_ADOPTION ba ON e.course# = ba.course# GROUP BY e.regno) AS max_books);
 
 h.
-SELECT publisher, COUNT(*) AS num_books_published
-FROM TEXT
-GROUP BY publisher;
+//works
+select publisher, count(distinct book_isbn)
+from text
+group by publisher;
+
+PUBLISHER                                          COUNT(DISTINCTBOOK_ISBN)
+-------------------------------------------------- ------------------------
+Selina                                                                    2
+Princeton                                                                 1
+Fred                                                                      1
+McGraw                                                                    2
 
 i.
 SELECT regno
