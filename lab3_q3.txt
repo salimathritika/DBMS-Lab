@@ -1,0 +1,195 @@
+create table person(
+    driver_id# varchar(30), name varchar(50), address varchar(100),
+    primary key(driver_id#));
+
+create table car(
+    regno varchar(20), model varchar(30), year int,
+    primary key(regno));
+
+create table accident(
+   report_number int,accd_date date, location varchar(50),
+    primary key(report_number));
+
+create table owns(
+    driver_id# varchar(30),regno varchar(20),
+   foreign key(driver_id#) references person on delete cascade,
+    foreign key(regno) references car on delete cascade);
+
+create table participated(
+    driver_id# varchar(30), regno varchar(20), report_number int, damage_amount int,
+    foreign key(driver_id#) references person on delete cascade,
+    foreign key(regno) references car on delete cascade,
+    foreign key(report_number) references accident on delete cascade);
+
+insert into person values('1234','Rahul','107, Raj apt,Mumbai');
+insert into person values('4567','Ajay','211,Pristine apartment,Delhi');
+insert into person values('8910','Hrithik','111,Hills apt,Bangalore');
+insert into person values('5678','Deepika','720,Pyramid apt,Pune');
+insert into person values('4321','Aditya','727,Royal apt,Bangalore');
+
+insert into car values('MH4041','Kia',1998);
+insert into car values('HR7081','Scorpio',2000);
+insert into car values('KA5052','Dzire',2012);
+insert into car values('MH9111','Fiat',2009);
+insert into car values('KA9999','Porsche',2004);
+
+insert into accident values(9,to_date('2000-11-04','yyyy-mm-dd'),'Mumbai');
+insert into accident values(5,to_date('2002-09-07','yyyy-mm-dd'),'Delhi');
+insert into accident values(16,to_date('2016-12-11','yyyy-mm-dd'),'Bangalore');
+insert into accident values(17,to_date('2011-05-27','yyyy-mm-dd'),'Pune');
+insert into accident values(12,to_date('2005-04-04','yyyy-mm-dd'),'Bangalore');
+
+insert into owns values('1234','MH4041');
+insert into owns values('4567','HR7081');
+insert into owns values('8910','KA5052');
+insert into owns values('5678','MH9111');
+insert into owns values('4321','KA9999');
+
+insert into participated values('1234','MH4041',9,10000);
+insert into participated values('4567','HR7081',5,12000);
+insert into participated values('8910','KA5052',16,15000);
+insert into participated values('5678','MH9111',17,16000);
+insert into participated values('4321','KA9999',12,20000);
+
+select * from person;
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1234
+Rahul
+107, Raj apt,Mumbai
+
+4567
+Ajay
+211,Pristine apartment,Delhi
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+
+8910
+Hrithik
+111,Hills apt,Bangalore
+
+5678
+Deepika
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+720,Pyramid apt,Pune
+
+4321
+Aditya
+727,Royal apt,Bangalore
+
+
+select * from car;
+
+REGNO                MODEL                                YEAR
+-------------------- ------------------------------ ----------
+MH4041               Kia                                  1998
+HR7081               Scorpio                              2000
+KA5052               Dzire                                2012
+MH9111               Fiat                                 2009
+KA9999               Porsche                              2004
+
+select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           16 11-DEC-16 Bangalore
+           17 27-MAY-11 Pune
+           12 04-APR-05 Bangalore
+
+select * from owns;
+
+DRIVER_ID#                     REGNO
+------------------------------ --------------------
+1234                           MH4041
+4567                           HR7081
+8910                           KA5052
+5678                           MH9111
+4321                           KA9999
+
+select * from participated;
+
+DRIVER_ID#                     REGNO                REPORT_NUMBER DAMAGE_AMOUNT
+------------------------------ -------------------- ------------- -------------
+1234                           MH4041                           9         10000
+4567                           HR7081                           5         12000
+8910                           KA5052                          16         15000
+5678                           MH9111                          17         16000
+4321                           KA9999                          12         20000
+
+
+
+
+update participated set damage_amount=25000 where report_number=12;
+o/p:
+select * from participated;
+
+DRIVER_ID#                     REGNO                REPORT_NUMBER DAMAGE_AMOUNT
+------------------------------ -------------------- ------------- -------------
+1234                           MH4041                           9         10000
+4567                           HR7081                           5         12000
+8910                           KA5052                          16         15000
+5678                           MH9111                          17         16000
+4321                           KA9999                          12         25000
+
+delete from accident where extract(year from accd_date)=2016 ;
+o/p:
+select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           17 27-MAY-11 Pune
+           12 04-APR-05 Bangalore
+
+alter table owns add name varchar(20);
+o/p:
+ select * from owns;
+
+DRIVER_ID#                     REGNO                NAME
+------------------------------ -------------------- --------------------
+1234                           MH4041
+4567                           HR7081
+8910                           KA5052
+5678                           MH9111
+4321                           KA9999
+
+alter table owns drop column name;
+o/p:
+select * from owns;
+
+DRIVER_ID#                     REGNO
+------------------------------ --------------------
+1234                           MH4041
+4567                           HR7081
+8910                           KA5052
+5678                           MH9111
+4321                           KA9999
+
+alter table car add constraint check_const check (year>1980);
+o/p:
+insert into car values('rgjhe','efef',1979);
+insert into car values('rgjhe','efef',1979)
+*
+ERROR at line 1:
+ORA-02290: check constraint (SYSTEM.CHECK_CONST) violated
+
+
