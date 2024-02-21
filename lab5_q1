@@ -165,6 +165,7 @@ Robert
 
 need to check below code
 a.
+//works
 select distinct course#
   2  from course
   3  where(select count(*)
