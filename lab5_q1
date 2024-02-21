@@ -115,7 +115,7 @@ REGNO                   COURSE#
 6789                        102
 5678                        401
 
- select * from book_adoption;
+select * from book_adoption;
 
    COURSE#        SEM  BOOK_ISBN
 ---------- ---------- ----------
@@ -125,6 +125,7 @@ REGNO                   COURSE#
        133          3       6969
        299          2       5252
        454          2       1232
+       401          2       4563
 
 select * from text;
 
@@ -179,6 +180,9 @@ AUTHOR
 Fred
 Sigmund
 
+      4563 Advanced OS
+Selina
+Rowling
 
 need to check below code
 a.
@@ -250,15 +254,17 @@ Introduction to architecture
 VLSI concepts
 
 f.
-SELECT DISTINCT c.course#
-FROM COURSE c
-WHERE (
-    SELECT COUNT(*)
-    FROM BOOK_ADOPTION ba
-    JOIN TEXT t ON ba.book_isbn = t.book_isbn
-    WHERE c.course# = ba.course#
-      AND t.publisher = 'specific_publisher'
-) >= 2;
+//works
+ select course#,cname
+    from course
+    where (select count(book_isbn)
+    from text
+    natural join(book_adoption)
+    where((course.course#=book_adoption.course#) and publisher='Selina'))>1;
+
+   COURSE# CNAME
+---------- ------------------------------
+       401 Operating System
 
 g.
 SELECT regno
