@@ -217,12 +217,20 @@ REGNO                NAME
 1010                 Anna
 
 e.
-SELECT DISTINCT t.booktitle
-FROM TEXT t
-JOIN BOOK_ADOPTION ba ON t.book_isbn = ba.book_isbn
-JOIN COURSE c ON ba.course# = c.course#
-JOIN ENROLL e ON c.course# = e.course#
-WHERE e.regno = 'student_regno';
+//works
+ select booktitle
+    from text
+    where exists(select *
+                 from enroll natural join (book_adoption)
+                where(book_adoption.book_isbn=text.book_isbn));
+
+BOOKTITLE
+--------------------------------------------------
+OS concepts
+OS indepth
+Atomic Physics Concept
+Introduction to architecture
+VLSI concepts
 
 f.
 SELECT DISTINCT c.course#
