@@ -62,6 +62,107 @@ insert into text values(5898,'Atomic Physics Concept','Selina','Albert');
 insert into text values(6969,'Introduction to architecture','McGraw','Sally');
 insert into text values(5252,'VLSI concepts','McGraw','Robert');
 
+
+select * from student;
+
+REGNO                NAME
+-------------------- --------------------------------------------------
+MAJOR                BDATE
+-------------------- ---------
+1234                 Ritika
+Computer Science     14-APR-04
+
+2345                 Nikita
+Architecture         28-APR-05
+
+3456                 Aparna
+Electronics          04-NOV-04
+
+
+REGNO                NAME
+-------------------- --------------------------------------------------
+MAJOR                BDATE
+-------------------- ---------
+5678                 Santosh
+Civil                28-NOV-05
+
+6789                 Beryl
+Physics              10-JAN-04
+
+select * from course;
+
+   COURSE# CNAME                          DEPT
+---------- ------------------------------ ------------------------------
+       401 Operating System               Computer Science
+       231 Database System                Computer Science
+       102 Atomic Physics                 Physics
+       133 Buildings                      Architecture
+       455 Strength of material           Civil
+       299 VLSI                           Electronics
+
+select * from enroll;
+
+REGNO                   COURSE#
+-------------------- ----------
+1234                        401
+2345                        133
+3456                        299
+5678                        455
+6789                        102
+
+ select * from book_adoption;
+
+   COURSE#        SEM  BOOK_ISBN
+---------- ---------- ----------
+       401          1       9789
+       401          1       8762
+       102          2       5898
+       133          3       6969
+       299          2       5252
+
+select * from text;
+
+ BOOK_ISBN BOOKTITLE
+---------- --------------------------------------------------
+PUBLISHER
+--------------------------------------------------
+AUTHOR
+--------------------------------------------------
+      9789 OS concepts
+Selina
+Harry
+
+      8762 OS indepth
+Princeton
+James
+
+ BOOK_ISBN BOOKTITLE
+---------- --------------------------------------------------
+PUBLISHER
+--------------------------------------------------
+AUTHOR
+--------------------------------------------------
+
+      5898 Atomic Physics Concept
+Selina
+Albert
+
+      6969 Introduction to architecture
+McGraw
+
+ BOOK_ISBN BOOKTITLE
+---------- --------------------------------------------------
+PUBLISHER
+--------------------------------------------------
+AUTHOR
+--------------------------------------------------
+Sally
+
+      5252 VLSI concepts
+McGraw
+Robert
+
+
 need to check below code
 a.
 SELECT DISTINCT c.course#
