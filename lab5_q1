@@ -205,9 +205,16 @@ REGNO
 1234
 
 d.
-SELECT regno
-FROM STUDENT
-WHERE regno NOT IN (SELECT DISTINCT regno FROM ENROLL);
+//works
+select regno,name
+from student
+where not exists(select *
+                 from enroll
+                 where (enroll.regno=student.regno));
+
+REGNO                NAME
+-------------------- --------------------------------------------------
+1010                 Anna
 
 e.
 SELECT DISTINCT t.booktitle
