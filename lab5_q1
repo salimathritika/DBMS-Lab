@@ -193,14 +193,16 @@ Physics
 Computer Science
 
 c.
-SELECT DISTINCT s.regno
-FROM STUDENT s
-WHERE (
-    SELECT COUNT(DISTINCT c.dept)
-    FROM COURSE c
-    JOIN ENROLL e ON c.course# = e.course#
-    WHERE e.regno = s.regno
-) > 1;
+//works
+select distinct regno
+from student
+where (select count(course#)
+       from enroll
+       where(enroll.regno=student.regno))>1;
+
+REGNO
+--------------------
+1234
 
 d.
 SELECT regno
