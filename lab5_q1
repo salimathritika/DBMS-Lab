@@ -37,6 +37,30 @@ insert into student values('3456','Aparna','Electronics',to_date('2004-11-04','y
 insert into student values('5678','Santosh','Civil',to_date('2005-11-28','yyyy-mm-dd'));
 insert into student values('6789','Beryl','Physics',to_date('2004-01-10','yyyy-mm-dd'));
 
+insert into course values(401,'Operating System','Computer Science');
+insert into course values(231,'Database System','Computer Science');
+insert into course values(102,'Atomic Physics','Physics');
+insert into course values(133,'Buildings','Architecture');
+insert into course values(455,'Strength of material','Civil');
+insert into course values(299,'VLSI','Electronics');
+
+insert into enroll values('1234',401);
+insert into enroll values('2345',133);
+insert into enroll values('3456',299);
+insert into enroll values('5678',455);
+insert into enroll values('6789',102);
+
+insert into book_adoption values(401,1,9789);
+insert into book_adoption values(401,1,8762);
+insert into book_adoption values(102,2,5898);
+insert into book_adoption values(133,3,6969);
+insert into book_adoption values(299,2,5252);
+
+insert into text values(9789,'OS concepts','Selina','Harry');
+insert into text values(8762,'OS indepth','Princeton','James');
+insert into text values(5898,'Atomic Physics Concept','Selina','Albert');
+insert into text values(6969,'Introduction to architecture','McGraw','Sally');
+insert into text values(5252,'VLSI concepts','McGraw','Robert');
 
 need to check below code
 a.
