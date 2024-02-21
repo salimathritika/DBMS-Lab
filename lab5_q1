@@ -30,3 +30,93 @@ SQL> create table text(
 
 Table created.
 
+
+
+need to check below code
+a.
+SELECT DISTINCT c.course#
+FROM COURSE c
+WHERE (
+    SELECT COUNT(*)
+    FROM BOOK_ADOPTION ba
+    WHERE ba.course# = c.course#
+) > 1;
+
+b.
+SELECT DISTINCT c.dept
+FROM COURSE c
+WHERE NOT EXISTS (
+    SELECT *
+    FROM BOOK_ADOPTION ba
+    JOIN TEXT t ON ba.book_isbn = t.book_isbn
+    WHERE c.course# = ba.course#
+      AND t.publisher <> 'particular_publisher'
+);
+
+c.
+SELECT DISTINCT s.regno
+FROM STUDENT s
+WHERE (
+    SELECT COUNT(DISTINCT c.dept)
+    FROM COURSE c
+    JOIN ENROLL e ON c.course# = e.course#
+    WHERE e.regno = s.regno
+) > 1;
+
+d.
+SELECT regno
+FROM STUDENT
+WHERE regno NOT IN (SELECT DISTINCT regno FROM ENROLL);
+
+e.
+SELECT DISTINCT t.booktitle
+FROM TEXT t
+JOIN BOOK_ADOPTION ba ON t.book_isbn = ba.book_isbn
+JOIN COURSE c ON ba.course# = c.course#
+JOIN ENROLL e ON c.course# = e.course#
+WHERE e.regno = 'student_regno';
+
+f.
+SELECT DISTINCT c.course#
+FROM COURSE c
+WHERE (
+    SELECT COUNT(*)
+    FROM BOOK_ADOPTION ba
+    JOIN TEXT t ON ba.book_isbn = t.book_isbn
+    WHERE c.course# = ba.course#
+      AND t.publisher = 'specific_publisher'
+) >= 2;
+
+g.
+SELECT regno
+FROM (
+    SELECT e.regno, COUNT(*) AS num_books
+    FROM ENROLL e
+    JOIN BOOK_ADOPTION ba ON e.course# = ba.course#
+    GROUP BY e.regno
+    ORDER BY num_books DESC
+) AS max_books
+WHERE num_books = (SELECT MAX(num_books) FROM (SELECT COUNT(*) AS num_books FROM ENROLL e JOIN BOOK_ADOPTION ba ON e.course# = ba.course# GROUP BY e.regno) AS max_books);
+
+h.
+SELECT publisher, COUNT(*) AS num_books_published
+FROM TEXT
+GROUP BY publisher;
+
+i.
+SELECT regno
+FROM (
+    SELECT e.regno, COUNT(DISTINCT e.course#) AS num_courses_enrolled
+    FROM ENROLL e
+    JOIN BOOK_ADOPTION ba ON e.course# = ba.course#
+    GROUP BY e.regno
+) AS enrolled_books
+WHERE num_courses_enrolled = (
+    SELECT COUNT(*)
+    FROM COURSE c
+    WHERE EXISTS (
+        SELECT *
+        FROM BOOK_ADOPTION ba
+        WHERE c.course# = ba.course#
+    )
+);
