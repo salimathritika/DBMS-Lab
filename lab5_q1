@@ -177,15 +177,20 @@ select distinct course#
        401
 
 b.
-SELECT DISTINCT c.dept
-FROM COURSE c
-WHERE NOT EXISTS (
-    SELECT *
-    FROM BOOK_ADOPTION ba
-    JOIN TEXT t ON ba.book_isbn = t.book_isbn
-    WHERE c.course# = ba.course#
-      AND t.publisher <> 'particular_publisher'
-);
+//works
+select distinct dept
+  2  from course
+  3  where not exists(
+  4  select *
+  5  from book_adoption
+  6  natural join (text)
+  7  where((course.course#=book_adoption.course#) and (text.publisher <> 'Selina')));  //can choose any publisher
+
+DEPT
+------------------------------
+Civil
+Physics
+Computer Science
 
 c.
 SELECT DISTINCT s.regno
