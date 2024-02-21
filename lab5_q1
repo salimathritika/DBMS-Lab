@@ -31,6 +31,12 @@ SQL> create table text(
 Table created.
 
 
+insert into student values('1234','Ritika','Computer Science',to_date('2004-04-14','yyyy-mm-dd'));
+insert into student values('2345','Nikita','Architecture',to_date('2005-04-28','yyyy-mm-dd'));
+insert into student values('3456','Aparna','Electronics',to_date('2004-11-04','yyyy-mm-dd'));
+insert into student values('5678','Santosh','Civil',to_date('2005-11-28','yyyy-mm-dd'));
+insert into student values('6789','Beryl','Physics',to_date('2004-01-10','yyyy-mm-dd'));
+
 
 need to check below code
 a.
