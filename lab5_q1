@@ -165,13 +165,15 @@ Robert
 
 need to check below code
 a.
-SELECT DISTINCT c.course#
-FROM COURSE c
-WHERE (
-    SELECT COUNT(*)
-    FROM BOOK_ADOPTION ba
-    WHERE ba.course# = c.course#
-) > 1;
+select distinct course#
+  2  from course
+  3  where(select count(*)
+  4        from book_adoption
+  5        where (book_adoption.course#=course.course#))>1;
+
+   COURSE#
+----------
+       401
 
 b.
 SELECT DISTINCT c.dept
