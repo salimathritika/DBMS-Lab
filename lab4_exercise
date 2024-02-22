@@ -1,9 +1,9 @@
 1) select count(*) as TotPeople from accident where (extract(year from accd_date)=2008); //may need to modify but works
 
 2)SELECT COUNT(*) AS total_accidents
-FROM PARTICIPATED pa
-JOIN CAR c ON pa.regno = c.regno
-WHERE c.model = 'Kia';
+   FROM participated
+  JOIN (car) ON participated.regno = car.regno
+   WHERE car.model = 'Kia';
 
 TOTAL_ACCIDENTS
 ---------------
@@ -27,11 +27,11 @@ having count(*)>=2);
 
 no rows selected
 
-5) SELECT o.driver_id#, p.name
-   FROM OWNS o
-   LEFT JOIN PARTICIPATED pa ON o.regno = pa.regno
-   JOIN PERSON p ON o.driver_id# = p.driver_id#
-   WHERE pa.regno IS NULL;
+5) SELECT owns.driver_id#,person.name
+   FROM owns
+   LEFT JOIN participated ON owns.regno = participated.regno
+   JOIN person ON owns.driver_id# = person.driver_id#
+   WHERE participated.regno IS NULL;
 
 DRIVER_ID#
 ------------------------------
