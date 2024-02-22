@@ -21,6 +21,12 @@ Deepika                                                          1        16000
 Ajay                                                             1        12000
 Rahul                                                            1        10000
 
+4)select driver_id# from person where driver_id# 
+in(select driver_id# from participated natural join accident group by driver_id#, extract(year from accd_date) 
+having count(*)>=2);
+
+no rows selected
+
 5) SELECT o.driver_id#, p.name
    FROM OWNS o
    LEFT JOIN PARTICIPATED pa ON o.regno = pa.regno
