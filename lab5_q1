@@ -266,16 +266,14 @@ f.
 ---------- ------------------------------
        401 Operating System
 
-g.
-SELECT regno
-FROM (
-    SELECT e.regno, COUNT(*) AS num_books
-    FROM ENROLL e
-    JOIN BOOK_ADOPTION ba ON e.course# = ba.course#
-    GROUP BY e.regno
-    ORDER BY num_books DESC
-) AS max_books
-WHERE num_books = (SELECT MAX(num_books) FROM (SELECT COUNT(*) AS num_books FROM ENROLL e JOIN BOOK_ADOPTION ba ON e.course# = ba.course# GROUP BY e.regno) AS max_books);
+g)select regno,count(*) as no_of_books 
+from enroll natural join book_adoption 
+group by enroll.regno 
+having count(book_isbn) >= all (select count(book_isbn) from enroll natural join book_adoption group by enroll.regno);
+o/p:
+REGNO                NO_OF_BOOKS
+-------------------- -----------
+1234                           2
 
 h.
 //works
@@ -290,20 +288,29 @@ Princeton                                                                 1
 Fred                                                                      1
 McGraw                                                                    2
 
-i.
-SELECT regno
-FROM (
-    SELECT e.regno, COUNT(DISTINCT e.course#) AS num_courses_enrolled
-    FROM ENROLL e
-    JOIN BOOK_ADOPTION ba ON e.course# = ba.course#
-    GROUP BY e.regno
-) AS enrolled_books
-WHERE num_courses_enrolled = (
-    SELECT COUNT(*)
-    FROM COURSE c
-    WHERE EXISTS (
-        SELECT *
-        FROM BOOK_ADOPTION ba
-        WHERE c.course# = ba.course#
-    )
-);
+i)
+SELECT DISTINCT(name)
+   FROM Student NATURAL JOIN Enroll
+    WHERE course# IN
+    (SELECT course# FROM Book_Adoption);
+o/p:
+NAME
+--------------------------------------------------
+Ritika
+Nikita
+Aparna
+Beryl
+
+j)create view student_enrolledincourse_adoptbooks as
+  SELECT DISTINCT(name)
+   FROM Student NATURAL JOIN Enroll
+    WHERE course# IN
+    (SELECT course# FROM Book_Adoption);
+
+  select * from student_enrolledincourse_adoptbooks;
+NAME
+--------------------------------------------------
+Ritika
+Nikita
+Aparna
+Beryl
