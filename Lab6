@@ -1,0 +1,67 @@
+3)
+CREATE OR REPLACE function acc2(year1 in varchar) return number as
+  2  counter integer;
+  3  BEGIN
+  4  SELECT count(*) INTO counter
+  5  FROM ACCIDENT a
+  6  WHERE extract(year FROM accd_date)=year1;
+  7  dbms_output.put_line('Total Accidents Function');
+  8  return counter;
+  9  END;
+ 10  /
+
+Function created.
+
+SQL>
+SQL> set serveroutput on;
+SQL> declare year integer;
+  2  BEGIN
+  3  year:=acc2(2020);
+  4  dbms_output.put_line(year);
+  5  END;
+  6  /
+Total Accidents Function
+0
+
+PL/SQL procedure successfully completed.
+
+SQL>
+SQL> declare n number(2);
+  2  BEGIN
+  3  n:=acc2(2000);
+  4  dbms_output.put_line('No of accidents: '||n);
+  5  END;
+  6  /
+Total Accidents Function
+No of accidents: 1
+
+PL/SQL procedure successfully completed.
+
+
+5)
+CREATE OR REPLACE procedure acc1(loc in varchar) IS
+  2  rno INTEGER;
+  3  BEGIN
+  4  For item in(
+  5  SELECT * FROM ACCIDENT WHERE ACCIDENT.location=loc
+  6  ) LOOP
+  7  dbms_output.put_line('Report Number : '||item.report_number);
+  8  dbms_output.put_line('Accident Date : '||item.accd_date);
+  9  dbms_output.put_line('Location : '||item.location);
+ 10  END LOOP;
+ 11  END;
+ 12  /
+
+Procedure created.
+
+SQL> set serveroutput on;
+SQL> declare
+  2  BEGIN
+  3  acc1('Mumbai');
+  4  END;
+  5  /
+Report Number : 9
+Accident Date : 04-NOV-00
+Location : Mumbai
+
+PL/SQL procedure successfully completed.
