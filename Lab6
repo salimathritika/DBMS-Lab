@@ -98,3 +98,40 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Total accidents in 2005: ' || accidents_in_2005);
 END;
 /
+
+
+4q)
+CREATE OR REPLACE PROCEDURE display_total_damage(
+    p_driver_id IN VARCHAR2,
+    p_year IN NUMBER
+)
+IS
+    v_total_damage NUMBER;
+BEGIN
+    -- Initialize the variable to hold the total damage
+    v_total_damage := 0;
+    
+    -- Query to sum the damage caused by the specified driver in the given year
+    SELECT SUM(p.damage_amount)
+    INTO v_total_damage
+    FROM PARTICIPATED p
+    JOIN ACCIDENT a ON p.report_number = a.report_number
+    WHERE p.driver_id# = p_driver_id
+    AND EXTRACT(YEAR FROM a.accd_date) = p_year;
+
+    -- Display the total damage
+    DBMS_OUTPUT.PUT_LINE('Total damage caused by driver ' || p_driver_id || ' in ' || p_year || ': ' || v_total_damage);
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        -- Handle the case where no data is found for the specified driver and year
+        DBMS_OUTPUT.PUT_LINE('No data found for driver ' || p_driver_id || ' in ' || p_year);
+END;
+/
+
+BEGIN
+    display_total_damage('1234', 2000);
+END;
+/
+
+
+
