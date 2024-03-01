@@ -65,3 +65,36 @@ Accident Date : 04-NOV-00
 Location : Mumbai
 
 PL/SQL procedure successfully completed.
+
+-------------------------------------------------------------------------------------------
+q3)
+CREATE OR REPLACE FUNCTION total_accidents_in_year(p_year IN NUMBER)
+RETURN NUMBER
+IS
+    v_total_accidents NUMBER;
+BEGIN
+    -- Initialize the variable to hold the total number of accidents
+    v_total_accidents := 0;
+    
+    -- Query to count the number of accidents in the given year
+    SELECT COUNT(*)
+    INTO v_total_accidents
+    FROM ACCIDENT
+    WHERE EXTRACT(YEAR FROM accd_date) = p_year;
+    
+    -- Return the total number of accidents
+    RETURN v_total_accidents;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        -- Handle the case where no accidents are found for the given year
+        RETURN 0;
+END;
+/
+
+DECLARE
+    accidents_in_2005 NUMBER;
+BEGIN
+    accidents_in_2005 := total_accidents_in_year(2005);
+    DBMS_OUTPUT.PUT_LINE('Total accidents in 2005: ' || accidents_in_2005);
+END;
+/
