@@ -40,26 +40,26 @@ PL/SQL procedure successfully completed.
 
 5)
 CREATE OR REPLACE procedure acc1(loc in varchar) IS
-  2  rno INTEGER;
-  3  BEGIN
-  4  For item in(
-  5  SELECT * FROM ACCIDENT WHERE ACCIDENT.location=loc
-  6  ) LOOP
-  7  dbms_output.put_line('Report Number : '||item.report_number);
-  8  dbms_output.put_line('Accident Date : '||item.accd_date);
-  9  dbms_output.put_line('Location : '||item.location);
- 10  END LOOP;
- 11  END;
- 12  /
+    rno INTEGER;
+    BEGIN
+    For item in(
+    SELECT * FROM ACCIDENT WHERE ACCIDENT.location=loc
+    ) LOOP
+    dbms_output.put_line('Report Number : '||item.report_number);
+    dbms_output.put_line('Accident Date : '||item.accd_date);
+    dbms_output.put_line('Location : '||item.location);
+   END LOOP;
+   END;
+   /
 
 Procedure created.
 
-SQL> set serveroutput on;
-SQL> declare
-  2  BEGIN
-  3  acc1('Mumbai');
-  4  END;
-  5  /
+ set serveroutput on;
+ declare
+    BEGIN
+    acc1('Mumbai');
+   END;
+    /
 Report Number : 9
 Accident Date : 04-NOV-00
 Location : Mumbai
