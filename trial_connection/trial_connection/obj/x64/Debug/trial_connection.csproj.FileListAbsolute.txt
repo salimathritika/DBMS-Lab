@@ -1,0 +1,10 @@
+D:\220953428\trial_connection\trial_connection\bin\x64\Debug\trial_connection.exe.config
+D:\220953428\trial_connection\trial_connection\bin\x64\Debug\trial_connection.exe
+D:\220953428\trial_connection\trial_connection\bin\x64\Debug\trial_connection.pdb
+D:\220953428\trial_connection\trial_connection\bin\x64\Debug\Oracle.DataAccess.dll
+D:\220953428\trial_connection\trial_connection\obj\x64\Debug\trial_connection.csprojResolveAssemblyReference.cache
+D:\220953428\trial_connection\trial_connection\obj\x64\Debug\trial_connection.Form1.resources
+D:\220953428\trial_connection\trial_connection\obj\x64\Debug\trial_connection.Properties.Resources.resources
+D:\220953428\trial_connection\trial_connection\obj\x64\Debug\trial_connection.csproj.GenerateResource.Cache
+D:\220953428\trial_connection\trial_connection\obj\x64\Debug\trial_connection.exe
+D:\220953428\trial_connection\trial_connection\obj\x64\Debug\trial_connection.pdb
