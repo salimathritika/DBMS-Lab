@@ -133,5 +133,36 @@ BEGIN
 END;
 /
 
+----------------------------------------------------------------------------------------------------------------------
+OWN
+
+3)
+create or replace function tot_accident(year_ac number)
+  2  return number is
+  3  tot_no number;
+  4  begin
+  5  select count(*) into tot_no
+  6  from accident
+  7  where extract(year from accident.accd_date)=year_ac;
+  8  return tot_no;
+  9  end;
+ 10  /
+
+Function created.
+
+declare
+  2      a number;
+  3      year_accd number:=&year_accd;
+  4      begin
+  5      a:=tot_accident(year_accd);
+  6      dbms_output.put_line(a||' number of accidents in that year');
+  7      end;
+  8      /
+Enter value for year_accd: 2002
+old   3:     year_accd number:=&year_accd;
+new   3:     year_accd number:=2002;
+1 number of accidents in that year
+
+PL/SQL procedure successfully completed.
 
 
