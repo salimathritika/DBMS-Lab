@@ -165,4 +165,41 @@ new   3:     year_accd number:=2002;
 
 PL/SQL procedure successfully completed.
 
+4)
+ CREATE OR REPLACE PROCEDURE display_total_damage(
+        p_driver_id IN VARCHAR2,
+        p_year IN NUMBER
+    )
+    IS
+        v_total_damage NUMBER;
+    BEGIN
+        v_total_damage := 0;
+  
+       SELECT SUM(p.damage_amount)
+       INTO v_total_damage
+       FROM PARTICIPATED p
+       JOIN ACCIDENT a ON p.report_number = a.report_number
+       WHERE p.driver_id# = p_driver_id
+       AND EXTRACT(YEAR FROM a.accd_date) = p_year;
+ 
+       DBMS_OUTPUT.PUT_LINE('Total damage caused by driver ' || p_driver_id || ' in ' || p_year || ': ' || v_total_damage);
+ 
+   END;
+   /
 
+ declare
+    driver_id varchar(30):=&driver_id;
+    year_ac number:=&year_ac;
+    begin
+    display_total_damage(driver_id,year_ac);
+    end;
+    /
+Enter value for driver_id: 1234
+old   2: driver_id varchar(30):=&driver_id;
+new   2: driver_id varchar(30):=1234;
+Enter value for year_ac: 2000
+old   3: year_ac number:=&year_ac;
+new   3: year_ac number:=2000;
+Total damage caused by driver 1234 in 2000: 10000
+
+PL/SQL procedure successfully completed.
