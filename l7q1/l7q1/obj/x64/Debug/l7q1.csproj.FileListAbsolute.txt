@@ -1,0 +1,11 @@
+D:\220953428\l7q1\l7q1\bin\x64\Debug\l7q1.exe.config
+D:\220953428\l7q1\l7q1\bin\x64\Debug\l7q1.exe
+D:\220953428\l7q1\l7q1\bin\x64\Debug\l7q1.pdb
+D:\220953428\l7q1\l7q1\bin\x64\Debug\Oracle.DataAccess.dll
+D:\220953428\l7q1\l7q1\obj\x64\Debug\l7q1.csprojResolveAssemblyReference.cache
+D:\220953428\l7q1\l7q1\obj\x64\Debug\l7q1.Form1.resources
+D:\220953428\l7q1\l7q1\obj\x64\Debug\l7q1.person.resources
+D:\220953428\l7q1\l7q1\obj\x64\Debug\l7q1.Properties.Resources.resources
+D:\220953428\l7q1\l7q1\obj\x64\Debug\l7q1.csproj.GenerateResource.Cache
+D:\220953428\l7q1\l7q1\obj\x64\Debug\l7q1.exe
+D:\220953428\l7q1\l7q1\obj\x64\Debug\l7q1.pdb
