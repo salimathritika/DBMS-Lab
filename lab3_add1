@@ -18,21 +18,21 @@ Table created.
 
  create table order_items(
     order# int,item# int,qty int,
-    foreign key(order#) references orders on delete set null,
-    foreign key(item#) references item on delete set null);
+    foreign key(order#) references orders on delete cascade,
+    foreign key(item#) references item on delete cascade);
 
 Table created.
 
  create table shipment(
     order# int, warehouse# int, shipdate date,
     primary key(warehouse#),
-    foreign key(order#) references orders on delete set null);
+    foreign key(order#) references orders on delete cascade);
 
 Table created.
 
  create table warehouse(
     warehouse# int,city varchar(30),
-    foreign key(warehouse#) references shipment on delete set null);
+    foreign key(warehouse#) references shipment on delete cascade);
 
 Table created.
 
