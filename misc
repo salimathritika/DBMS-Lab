@@ -1,0 +1,368 @@
+SQL> desc manipal;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ R_NO                                               NUMBER(38)
+ ACCD_DATE                                          DATE
+
+SQL> select * from manipal;
+
+no rows selected
+
+SQL> exec acc_deet;
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from manipal;
+
+      R_NO ACCD_DATE
+---------- ---------
+         9 04-NOV-00
+
+SQL> select * from accidents;;
+select * from accidents;
+                       *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from accidents;
+select * from accidents
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           17 27-MAY-11 Pune
+           12 04-APR-05 Bangalore
+
+SQL> desc accident;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REPORT_NUMBER                             NOT NULL NUMBER(38)
+ ACCD_DATE                                          DATE
+ LOCATION                                           VARCHAR2(50)
+
+SQL> desc owners;
+ERROR:
+ORA-04043: object owners does not exist
+
+
+SQL> desc owner;
+ERROR:
+ORA-04043: object owner does not exist
+
+
+SQL> select count(*) as total_people
+  2  participated natural join accident
+  3  where extract(year from accd_date)=2008;
+participated natural join accident
+*
+ERROR at line 2:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select count(*) as total_people
+  2  from participated natural join accident
+  3  where extract(year from accd_date)=2008;
+
+TOTAL_PEOPLE
+------------
+           0
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           17 27-MAY-11 Pune
+           12 04-APR-05 Bangalore
+
+SQL> select count(*) as total_people
+  2      from participated natural join accident
+  3      where extract(year from accd_date)=2011;
+
+TOTAL_PEOPLE
+------------
+           1
+
+SQL> select count(*) as no_accidents
+  2  from car natural join participated
+  3  where model='Kia';
+
+NO_ACCIDENTS
+------------
+           1
+
+SQL> select name as owner_name, count(report_number) as tot_accidents, sum(damage_amount) as tot_damage_amt
+  2  from participated join person on (driver_id#)
+  3  order by tot_damage_amt;
+order by tot_damage_amt
+*
+ERROR at line 3:
+ORA-00920: invalid relational operator
+
+
+SQL> select name as owner_name, count(report_number) as tot_accidents, sum(damage_amount) as tot_damage_amt
+  2      from participated join person on (driver_id#)
+  3      order by tot_damage_amt desc;
+    order by tot_damage_amt desc
+    *
+ERROR at line 3:
+ORA-00920: invalid relational operator
+
+
+SQL> select name as owner_name, count(report_number) as tot_accidents, sum(damage_amount) as tot_damage_amt
+  2      from participated join person on (driver_id#)
+  3      group by name
+  4      order by tot_damage_amt desc;
+    group by name
+    *
+ERROR at line 3:
+ORA-00920: invalid relational operator
+
+
+SQL> select name as owner_name, count(report_number) as tot_accidents, sum(damage_amount) as tot_damage_amt
+  2      from participated join person using (driver_id#)
+  3      group by name
+  4      order by tot_damage_amt desc;
+
+OWNER_NAME                                         TOT_ACCIDENTS TOT_DAMAGE_AMT
+-------------------------------------------------- ------------- --------------
+Aditya                                                         1          25000
+Deepika                                                        1          16000
+Ajay                                                           1          12000
+Rahul                                                          1          10000
+
+SQL> select name as owner_name, count(report_number) as tot_accidents, sum(damage_amount) as tot_damage_amt
+  2      from participated join person using (driver_id#)
+  3
+SQL>     order by tot_damage_amt desc;
+SP2-0734: unknown command beginning "order by t..." - rest of line ignored.
+SQL> select name as owner_name, count(report_number) as tot_accidents, sum(damage_amount) as tot_damage_amt
+  2      from participated join person using (driver_id#)
+  3     order by tot_damage_amt desc;
+select name as owner_name, count(report_number) as tot_accidents, sum(damage_amount) as tot_damage_amt
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select name as owner_name, count(report_number) as tot_accidents, sum(damage_amount) as tot_damage_amt
+  2      from participated join person using (driver_id#)
+  3      group by name
+  4      order by tot_damage_amt desc;
+
+OWNER_NAME                                         TOT_ACCIDENTS TOT_DAMAGE_AMT
+-------------------------------------------------- ------------- --------------
+Aditya                                                         1          25000
+Deepika                                                        1          16000
+Ajay                                                           1          12000
+Rahul                                                          1          10000
+
+SQL> select * from person;
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1234
+Rahul
+107, Raj apt,Mumbai
+
+4567
+Ajay
+211,Pristine apartment,Delhi
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+
+8910
+Hrithik
+111,Hills apt,Bangalore
+
+5678
+Deepika
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+720,Pyramid apt,Pune
+
+4321
+Aditya
+727,Royal apt,Bangalore
+
+
+SQL> select * from car;
+
+REGNO                MODEL                                YEAR
+-------------------- ------------------------------ ----------
+MH4041               Kia                                  1998
+HR7081               Scorpio                              2000
+KA5052               Dzire                                2012
+MH9111               Fiat                                 2009
+KA9999               Porsche                              2004
+
+SQL> select * from owns;
+
+DRIVER_ID#                     REGNO
+------------------------------ --------------------
+1234                           MH4041
+4567                           HR7081
+8910                           KA5052
+5678                           MH9111
+4321                           KA9999
+
+SQL> insert into accident values(34,to_date('24-03-2011','dd-mm-yyyy'),Mumbai);
+insert into accident values(34,to_date('24-03-2011','dd-mm-yyyy'),Mumbai)
+                                                                  *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into accident values(34,to_date('24-03-2011','dd-mm-yyyy'),'Mumbai');
+
+1 row created.
+
+SQL> insert into participated values('4567','HR7081',34,12000);
+
+1 row created.
+
+SQL> select name as owner_name, count(report_number) as tot_accidents, sum(damage_amount) as tot_damage_amt
+  2      from participated join person using (driver_id#)
+  3      group by name
+  4      order by tot_damage_amt desc;
+
+OWNER_NAME                                         TOT_ACCIDENTS TOT_DAMAGE_AMT
+-------------------------------------------------- ------------- --------------
+Aditya                                                         1          25000
+Ajay                                                           2          24000
+Deepika                                                        1          16000
+Rahul                                                          1          10000
+
+SQL> select * from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+            9 04-NOV-00 Mumbai
+            5 07-SEP-02 Delhi
+           17 27-MAY-11 Pune
+           12 04-APR-05 Bangalore
+           34 24-MAR-11 Mumbai
+
+SQL> select * from participated;
+
+DRIVER_ID#                     REGNO                REPORT_NUMBER DAMAGE_AMOUNT
+------------------------------ -------------------- ------------- -------------
+1234                           MH4041                           9         10000
+4567                           HR7081                           5         12000
+5678                           MH9111                          17         16000
+4321                           KA9999                          12         25000
+4567                           HR7081                          34         12000
+
+SQL> insert into accident values(37,to_date('24-03-2011','dd-mm-yyyy'),'Bangalore');
+
+1 row created.
+
+SQL> insert into participated values('4567','HR7081',37,12000);
+
+1 row created.
+
+SQL> delete from participated where report_number=37;
+
+1 row deleted.
+
+SQL> delete from accident where report_number=37;
+
+1 row deleted.
+
+SQL> insert into accident values(37,to_date('14-07-2011','dd-mm-yyyy'),'Bangalore');
+
+1 row created.
+
+SQL> insert into participated values('4567','HR7081',37,12000);
+
+1 row created.
+
+SQL> insert into accident values(42,to_date('04-11-2011','dd-mm-yyyy'),'Delhi');
+
+1 row created.
+
+SQL> insert into participated values('4567','HR7081',42,16000);
+
+1 row created.
+
+SQL> select name as owner_name, count(report_number) as tot_accidents, sum(damage_amount) as tot_damage_amt
+  2      from participated join person using (driver_id#)
+  3      group by name
+  4      order by tot_damage_amt desc;
+
+OWNER_NAME                                         TOT_ACCIDENTS TOT_DAMAGE_AMT
+-------------------------------------------------- ------------- --------------
+Ajay                                                           4          52000
+Aditya                                                         1          25000
+Deepika                                                        1          16000
+Rahul                                                          1          10000
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select *
+  2  from person
+  3  where driver_id# in(select driver_id
+  4  where driver_id# in(select driver_id  5
+SQL> select *
+  2      from person
+  3      where driver_id# in(select driver_id#
+  4                          from participated
+  5                          group by driver_id#
+  6                          having count(report_number)>=2);
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+4567
+Ajay
+211,Pristine apartment,Delhi
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select *
+  2      from person
+  3      where driver_id# not in(select driver_id#
+  4                          from participated
+  5                          group by driver_id#
+  6                          having count(report_number)>=1);
+
+DRIVER_ID#
+------------------------------
+NAME
+--------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+8910
+Hrithik
+111,Hills apt,Bangalore
