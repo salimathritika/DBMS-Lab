@@ -245,3 +245,26 @@ select * from delhi;
       R_NO ACCD_DATE
 ---------- ---------
          9 07-SEP-02
+
+q2)
+CREATE OR REPLACE TRIGGER acc_info
+  2  AFTER INSERT ON participated
+  3  FOR EACH ROW
+  4  DECLARE
+  5    did participated.driver_id#%TYPE;
+  6    n person.name%TYPE;
+  7    addr person.address%TYPE;
+  8  BEGIN
+  9    did := :new.driver_id#;
+ 10    SELECT name, address INTO n, addr
+ 11    FROM person
+ 12    WHERE driver_id# = did;
+ 13    dbms_output.put_line('Driver id:' || did || ', Name:' || n || ', Address:' || addr);
+ 14  END;
+ 15  /
+
+Trigger created.
+
+SQL> insert into participated values('4567','HR7081',76,9000);
+Driver id:4567, Name:Ajay, Address:211,Pristine apartment,Delhi
+
