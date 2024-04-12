@@ -204,3 +204,43 @@ Accident Date : 04-NOV-00
 Location : Mumbai
 
 PL/SQL procedure successfully completed
+
+create table mumbai(
+r_no int, accd_date date);
+
+create table delhi(
+r_no int, accd_date date);
+
+create or replace procedure acc_deet as
+cursor c is
+select * from accident ;
+r c%rowtype;
+begin
+open c;
+loop
+fetch c into r;
+exit when c%notfound;
+if r.location='Mumbai' then
+insert into mumbai values(r.report_number, r.accd_date);
+elsif r.location='Delhi' then
+insert into delhi values(r.report_number, r.accd_date);
+end if;
+end loop;
+close c;
+end;
+/
+
+exec acc_deet;
+
+PL/SQL procedure successfully completed.
+
+select * from mumbai;
+
+      R_NO ACCD_DATE
+---------- ---------
+         9 04-NOV-00
+
+select * from delhi;
+      R_NO ACCD_DATE
+---------- ---------
+         9 07-SEP-02
