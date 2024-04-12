@@ -366,3 +366,1055 @@ ADDRESS
 8910
 Hrithik
 111,Hills apt,Bangalore
+
+
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Fri Apr 12 14:43:51 2024
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+Last Successful login time: Fri Apr 12 2024 09:07:33 +05:30
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> execute "@C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql"
+BEGIN "@C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql"; END;
+
+       *
+ERROR at line 1:
+ORA-06550: line 1, column 8:
+PLS-00201: identifier
+'@C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql' must be declared
+ORA-06550: line 1, column 8:
+PL/SQL: Statement ignored
+
+
+SQL> execute '@C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql'
+BEGIN '@C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql'; END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7:
+PLS-00103: Encountered the symbol
+"@C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql" when expecting
+one of the following:
+( begin case declare exit for goto if loop mod null pragma
+raise return select update while with <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> <<
+continue close current delete fetch lock insert open rollback
+savepoint set sql execute commit forall merge standard pipe
+purge json_object
+The symbol "return" was substituted for "@C:\U
+
+
+SQL> execute 'C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql'
+BEGIN 'C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql'; END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7:
+PLS-00103: Encountered the symbol
+"C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql" when expecting one
+of the following:
+( begin case declare exit for goto if loop mod null pragma
+raise return select update while with <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> <<
+continue close current delete fetch lock insert open rollback
+savepoint set sql execute commit forall merge standard pipe
+purge json_object
+The symbol "return" was substituted for "C:\Use
+
+
+SQL> 'C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql'
+SP2-0734: unknown command beginning "'C:\Users\..." - rest of line ignored.
+SQL> @C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql
+SP2-0310: unable to open file "C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql"
+SQL> @"C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql"
+SP2-0310: unable to open file "C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql"
+SQL> start C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql
+SP2-0310: unable to open file "C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql"
+SQL> @ C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql
+SP2-0310: unable to open file "C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql"
+SQL> start C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql
+SP2-0310: unable to open file "C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql"
+SQL> @ \C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql
+SP2-0310: unable to open file "\C:\Users\ritik\Desktop\MIT-YEAR-2\MIT-SEM_4\DBMS\trial.sql"
+SQL> @ C:/Users/ritik/Desktop/MIT-YEAR-2/MIT-SEM_4/DBMS/trial.sql
+SP2-0310: unable to open file "C:/Users/ritik/Desktop/MIT-YEAR-2/MIT-SEM_4/DBMS/trial.sql"
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL VARCHAR2(20)
+ NAME                                               VARCHAR2(50)
+ MAJOR                                              VARCHAR2(20)
+ BDATE                                              DATE
+
+SQL> desc enroll;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              VARCHAR2(20)
+ COURSE#                                            NUMBER(38)
+
+SQL> select * from enroll;
+
+REGNO                   COURSE#
+-------------------- ----------
+1234                        401
+2345                        133
+3456                        299
+5678                        455
+6789                        102
+
+SQL> select course#,cname
+  2  from course natural join book_adoption
+  3  group by course#
+  4  having count(book_isbn)>=1;
+select course#,cname
+               *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select course#,cname
+  2  from course natural join book_adoption
+  3
+SQL> select course#
+  2  from course natural join book_adoption
+  3  group by course#
+  4  having count(book_isbn)>=1;
+
+   COURSE#
+----------
+       401
+       102
+       133
+       299
+
+SQL> @"C:\Users\ritik\Desktop"
+SP2-0310: unable to open file "C:\Users\ritik\Desktop.sql"
+SQL> @"C:\Users\ritik\Desktop\trial.sql"
+
+Function created.
+
+SQL> select dept
+  2  from course
+  3  where course# in(select course#
+  4                   from course natural join book_adoption join text using (book_isbn)
+  5                   group by course#
+  6                   having count(book_isbn)>=1);
+
+DEPT
+------------------------------
+Computer Science
+Physics
+Architecture
+Electronics
+
+SQL> commit;
+
+Commit complete.
+
+SQL> create table customer(
+  2      cust# int, cname varchar(50),city varchar(30)
+  3      ,primary key(cust#));
+
+Table created.
+
+SQL> create table orders(
+  2      order# int,odate date,cust# int,ordamt int,
+  3      primary key(order#));
+
+Table created.
+
+SQL>  create table item(
+  2      item# int,unitprice int,
+  3      primary key(item#));
+
+Table created.
+
+SQL> create table order_items(
+  2      order# int,item# int,qty int,
+  3      foreign key(order#) references orders on delete cascade,
+  4      foreign key(item#) references item on delete cascade);
+
+Table created.
+
+SQL> create table shipment(
+  2      order# int, warehouse# int, shipdate date,
+  3      primary key(warehouse#),
+  4      foreign key(order#) references orders on delete cascade);create table shipment(
+  5      order# int, warehouse# int, shipdate date,
+  6      primary key(warehouse#),
+  7      foreign key(order#) references orders on delete cascade);
+    foreign key(order#) references orders on delete cascade);create table shipment(
+                                                            *
+ERROR at line 4:
+ORA-00922: missing or invalid option
+
+
+SQL> create table shipment(
+  2      order# int, warehouse# int, shipdate date,
+  3      primary key(warehouse#),
+  4      foreign key(order#) references orders on delete cascade);
+
+Table created.
+
+SQL> create table warehouse(
+  2      warehouse# int,city varchar(30),
+  3      foreign key(warehouse#) references shipment on delete cascade);
+
+Table created.
+
+SQL> -- Tuples for the customer table
+SQL> INSERT INTO customer (cust#, cname, city) VALUES (1, 'John Doe', 'New York');
+
+1 row created.
+
+SQL> INSERT INTO customer (cust#, cname, city) VALUES (2, 'Jane Smith', 'Los Angeles');
+
+1 row created.
+
+SQL> INSERT INTO customer (cust#, cname, city) VALUES (3, 'Alice Johnson', 'Chicago');
+
+1 row created.
+
+SQL>
+SQL> -- Tuples for the orders table
+SQL> INSERT INTO orders (order#, odate, cust#, ordamt) VALUES (101, '2024-04-10', 1, 500);
+INSERT INTO orders (order#, odate, cust#, ordamt) VALUES (101, '2024-04-10', 1, 500)
+                                                               *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO orders (order#, odate, cust#, ordamt) VALUES (102, '2024-04-11', 2, 750);
+INSERT INTO orders (order#, odate, cust#, ordamt) VALUES (102, '2024-04-11', 2, 750)
+                                                               *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO orders (order#, odate, cust#, ordamt) VALUES (103, '2024-04-12', 3, 300);
+INSERT INTO orders (order#, odate, cust#, ordamt) VALUES (103, '2024-04-12', 3, 300)
+                                                               *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL>
+SQL> -- Tuples for the item table
+SQL> INSERT INTO item (item#, unitprice) VALUES (1, 20);
+
+1 row created.
+
+SQL> INSERT INTO item (item#, unitprice) VALUES (2, 30);
+
+1 row created.
+
+SQL> INSERT INTO item (item#, unitprice) VALUES (3, 25);
+
+1 row created.
+
+SQL>
+SQL> -- Tuples for the order_items table
+SQL> INSERT INTO order_items (order#, item#, qty) VALUES (101, 1, 10);
+INSERT INTO order_items (order#, item#, qty) VALUES (101, 1, 10)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008333) violated - parent key not
+found
+
+
+SQL> INSERT INTO order_items (order#, item#, qty) VALUES (102, 2, 5);
+INSERT INTO order_items (order#, item#, qty) VALUES (102, 2, 5)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008333) violated - parent key not
+found
+
+
+SQL> INSERT INTO order_items (order#, item#, qty) VALUES (103, 3, 8);
+INSERT INTO order_items (order#, item#, qty) VALUES (103, 3, 8)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008333) violated - parent key not
+found
+
+
+SQL>
+SQL> -- Tuples for the shipment table
+SQL> INSERT INTO shipment (order#, warehouse#, shipdate) VALUES (101, 1, '2024-04-11');
+INSERT INTO shipment (order#, warehouse#, shipdate) VALUES (101, 1, '2024-04-11')
+                                                                    *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO shipment (order#, warehouse#, shipdate) VALUES (102, 2, '2024-04-12');
+INSERT INTO shipment (order#, warehouse#, shipdate) VALUES (102, 2, '2024-04-12')
+                                                                    *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO shipment (order#, warehouse#, shipdate) VALUES (103, 3, '2024-04-13');
+INSERT INTO shipment (order#, warehouse#, shipdate) VALUES (103, 3, '2024-04-13')
+                                                                    *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL>
+SQL> -- Tuples for the warehouse table
+SQL> INSERT INTO warehouse (warehouse#, city) VALUES (1, 'New York');
+INSERT INTO warehouse (warehouse#, city) VALUES (1, 'New York')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008337) violated - parent key not
+found
+
+
+SQL> INSERT INTO warehouse (warehouse#, city) VALUES (2, 'Los Angeles');
+INSERT INTO warehouse (warehouse#, city) VALUES (2, 'Los Angeles')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008337) violated - parent key not
+found
+
+
+SQL> INSERT INTO warehouse (warehouse#, city) VALUES (3, 'Chicago');
+INSERT INTO warehouse (warehouse#, city) VALUES (3, 'Chicago')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008337) violated - parent key not
+found
+
+
+SQL> -- Tuples for the customer table
+SQL> INSERT INTO customer VALUES (1, 'John Doe', 'New York');
+INSERT INTO customer VALUES (1, 'John Doe', 'New York')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008330) violated
+
+
+SQL> INSERT INTO customer VALUES (2, 'Jane Smith', 'Los Angeles');
+INSERT INTO customer VALUES (2, 'Jane Smith', 'Los Angeles')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008330) violated
+
+
+SQL> INSERT INTO customer VALUES (3, 'Alice Johnson', 'Chicago');
+INSERT INTO customer VALUES (3, 'Alice Johnson', 'Chicago')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008330) violated
+
+
+SQL> INSERT INTO customer VALUES (4, 'Michael Johnson', 'Houston');
+
+1 row created.
+
+SQL> INSERT INTO customer VALUES (5, 'Emily Wilson', 'Miami');
+
+1 row created.
+
+SQL> INSERT INTO customer VALUES (6, 'David Brown', 'Seattle');
+
+1 row created.
+
+SQL>
+SQL> -- Tuples for the orders table
+SQL> INSERT INTO orders VALUES (101, '2024-04-10', 1, 500);
+INSERT INTO orders VALUES (101, '2024-04-10', 1, 500)
+                                *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO orders VALUES (102, '2024-04-11', 2, 750);
+INSERT INTO orders VALUES (102, '2024-04-11', 2, 750)
+                                *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO orders VALUES (103, '2024-04-12', 3, 300);
+INSERT INTO orders VALUES (103, '2024-04-12', 3, 300)
+                                *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO orders VALUES (104, '2024-04-13', 4, 450);
+INSERT INTO orders VALUES (104, '2024-04-13', 4, 450)
+                                *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO orders VALUES (105, '2024-04-14', 5, 600);
+INSERT INTO orders VALUES (105, '2024-04-14', 5, 600)
+                                *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO orders VALUES (106, '2024-04-15', 6, 700);
+INSERT INTO orders VALUES (106, '2024-04-15', 6, 700)
+                                *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL>
+SQL> -- Tuples for the item table
+SQL> INSERT INTO item VALUES (1, 20);
+INSERT INTO item VALUES (1, 20)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008332) violated
+
+
+SQL> INSERT INTO item VALUES (2, 30);
+INSERT INTO item VALUES (2, 30)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008332) violated
+
+
+SQL> INSERT INTO item VALUES (3, 25);
+INSERT INTO item VALUES (3, 25)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008332) violated
+
+
+SQL> INSERT INTO item VALUES (4, 15);
+
+1 row created.
+
+SQL> INSERT INTO item VALUES (5, 35);
+
+1 row created.
+
+SQL> INSERT INTO item VALUES (6, 28);
+
+1 row created.
+
+SQL>
+SQL> -- Tuples for the order_items table
+SQL> INSERT INTO order_items VALUES (101, 1, 10);
+INSERT INTO order_items VALUES (101, 1, 10)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008333) violated - parent key not
+found
+
+
+SQL> INSERT INTO order_items VALUES (102, 2, 5);
+INSERT INTO order_items VALUES (102, 2, 5)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008333) violated - parent key not
+found
+
+
+SQL> INSERT INTO order_items VALUES (103, 3, 8);
+INSERT INTO order_items VALUES (103, 3, 8)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008333) violated - parent key not
+found
+
+
+SQL> INSERT INTO order_items VALUES (104, 4, 12);
+INSERT INTO order_items VALUES (104, 4, 12)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008333) violated - parent key not
+found
+
+
+SQL> INSERT INTO order_items VALUES (105, 5, 7);
+INSERT INTO order_items VALUES (105, 5, 7)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008333) violated - parent key not
+found
+
+
+SQL> INSERT INTO order_items VALUES (106, 6, 9);
+INSERT INTO order_items VALUES (106, 6, 9)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008333) violated - parent key not
+found
+
+
+SQL>
+SQL> -- Tuples for the shipment table
+SQL> INSERT INTO shipment VALUES (101, 1, '2024-04-11');
+INSERT INTO shipment VALUES (101, 1, '2024-04-11')
+                                     *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO shipment VALUES (102, 2, '2024-04-12');
+INSERT INTO shipment VALUES (102, 2, '2024-04-12')
+                                     *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO shipment VALUES (103, 3, '2024-04-13');
+INSERT INTO shipment VALUES (103, 3, '2024-04-13')
+                                     *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO shipment VALUES (104, 4, '2024-04-14');
+INSERT INTO shipment VALUES (104, 4, '2024-04-14')
+                                     *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO shipment VALUES (105, 5, '2024-04-15');
+INSERT INTO shipment VALUES (105, 5, '2024-04-15')
+                                     *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> INSERT INTO shipment VALUES (106, 6, '2024-04-16');
+INSERT INTO shipment VALUES (106, 6, '2024-04-16')
+                                     *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL>
+SQL> -- Tuples for the warehouse table
+SQL> INSERT INTO warehouse VALUES (1, 'New York');
+INSERT INTO warehouse VALUES (1, 'New York')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008337) violated - parent key not
+found
+
+
+SQL> INSERT INTO warehouse VALUES (2, 'Los Angeles');
+INSERT INTO warehouse VALUES (2, 'Los Angeles')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008337) violated - parent key not
+found
+
+
+SQL> INSERT INTO warehouse VALUES (3, 'Chicago');
+INSERT INTO warehouse VALUES (3, 'Chicago')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008337) violated - parent key not
+found
+
+
+SQL> INSERT INTO warehouse VALUES (4, 'Houston');
+INSERT INTO warehouse VALUES (4, 'Houston')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008337) violated - parent key not
+found
+
+
+SQL> INSERT INTO warehouse VALUES (5, 'Miami');
+INSERT INTO warehouse VALUES (5, 'Miami')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008337) violated - parent key not
+found
+
+
+SQL> INSERT INTO warehouse VALUES (6, 'Seattle');
+INSERT INTO warehouse VALUES (6, 'Seattle')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C008337) violated - parent key not
+found
+
+
+SQL> -- Tuples for the customer table
+SQL> INSERT INTO customer VALUES (1, 'John Doe', 'New York');
+INSERT INTO customer VALUES (1, 'John Doe', 'New York')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008330) violated
+
+
+SQL> INSERT INTO customer VALUES (2, 'Jane Smith', 'Los Angeles');
+INSERT INTO customer VALUES (2, 'Jane Smith', 'Los Angeles')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008330) violated
+
+
+SQL> INSERT INTO customer VALUES (3, 'Alice Johnson', 'Chicago');
+INSERT INTO customer VALUES (3, 'Alice Johnson', 'Chicago')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008330) violated
+
+
+SQL> INSERT INTO customer VALUES (4, 'Michael Johnson', 'Houston');
+INSERT INTO customer VALUES (4, 'Michael Johnson', 'Houston')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008330) violated
+
+
+SQL> INSERT INTO customer VALUES (5, 'Emily Wilson', 'Miami');
+INSERT INTO customer VALUES (5, 'Emily Wilson', 'Miami')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008330) violated
+
+
+SQL> INSERT INTO customer VALUES (6, 'David Brown', 'Seattle');
+INSERT INTO customer VALUES (6, 'David Brown', 'Seattle')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008330) violated
+
+
+SQL>
+SQL> -- Tuples for the orders table
+SQL> INSERT INTO orders VALUES (101, TO_DATE('2024-04-10', 'YYYY-MM-DD'), 1, 500);
+
+1 row created.
+
+SQL> INSERT INTO orders VALUES (102, TO_DATE('2024-04-11', 'YYYY-MM-DD'), 2, 750);
+
+1 row created.
+
+SQL> INSERT INTO orders VALUES (103, TO_DATE('2024-04-12', 'YYYY-MM-DD'), 3, 300);
+
+1 row created.
+
+SQL> INSERT INTO orders VALUES (104, TO_DATE('2024-04-13', 'YYYY-MM-DD'), 4, 450);
+
+1 row created.
+
+SQL> INSERT INTO orders VALUES (105, TO_DATE('2024-04-14', 'YYYY-MM-DD'), 5, 600);
+
+1 row created.
+
+SQL> INSERT INTO orders VALUES (106, TO_DATE('2024-04-15', 'YYYY-MM-DD'), 6, 700);
+
+1 row created.
+
+SQL>
+SQL> -- Tuples for the item table
+SQL> INSERT INTO item VALUES (1, 20);
+INSERT INTO item VALUES (1, 20)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008332) violated
+
+
+SQL> INSERT INTO item VALUES (2, 30);
+INSERT INTO item VALUES (2, 30)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008332) violated
+
+
+SQL> INSERT INTO item VALUES (3, 25);
+INSERT INTO item VALUES (3, 25)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008332) violated
+
+
+SQL> INSERT INTO item VALUES (4, 15);
+INSERT INTO item VALUES (4, 15)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008332) violated
+
+
+SQL> INSERT INTO item VALUES (5, 35);
+INSERT INTO item VALUES (5, 35)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008332) violated
+
+
+SQL> INSERT INTO item VALUES (6, 28);
+INSERT INTO item VALUES (6, 28)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C008332) violated
+
+
+SQL>
+SQL> -- Tuples for the order_items table
+SQL> INSERT INTO order_items VALUES (101, 1, 10);
+
+1 row created.
+
+SQL> INSERT INTO order_items VALUES (102, 2, 5);
+
+1 row created.
+
+SQL> INSERT INTO order_items VALUES (103, 3, 8);
+
+1 row created.
+
+SQL> INSERT INTO order_items VALUES (104, 4, 12);
+
+1 row created.
+
+SQL> INSERT INTO order_items VALUES (105, 5, 7);
+
+1 row created.
+
+SQL> INSERT INTO order_items VALUES (106, 6, 9);
+
+1 row created.
+
+SQL>
+SQL> -- Tuples for the shipment table
+SQL> INSERT INTO shipment VALUES (101, 1, TO_DATE('2024-04-11', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO shipment VALUES (102, 2, TO_DATE('2024-04-12', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO shipment VALUES (103, 3, TO_DATE('2024-04-13', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO shipment VALUES (104, 4, TO_DATE('2024-04-14', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO shipment VALUES (105, 5, TO_DATE('2024-04-15', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL> INSERT INTO shipment VALUES (106, 6, TO_DATE('2024-04-16', 'YYYY-MM-DD'));
+
+1 row created.
+
+SQL>
+SQL> -- Tuples for the warehouse table
+SQL> INSERT INTO warehouse VALUES (1, 'New York');
+
+1 row created.
+
+SQL> INSERT INTO warehouse VALUES (2, 'Los Angeles');
+
+1 row created.
+
+SQL> INSERT INTO warehouse VALUES (3, 'Chicago');
+
+1 row created.
+
+SQL> INSERT INTO warehouse VALUES (4, 'Houston');
+
+1 row created.
+
+SQL> INSERT INTO warehouse VALUES (5, 'Miami');
+
+1 row created.
+
+SQL> INSERT INTO warehouse VALUES (6, 'Seattle');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select cname as custname,count(order#) as no_of_orders, avg(ordamt) as AVG_ORDER_AMT
+  2  from customer natural join orders
+  3  group by cname;
+
+CUSTNAME                                           NO_OF_ORDERS AVG_ORDER_AMT
+-------------------------------------------------- ------------ -------------
+John Doe                                                      1
+          500
+Jane Smith                                                    1
+          750
+Alice Johnson                                                 1
+          300
+Michael Johnson                                               1
+          450
+Emily Wilson                                                  1
+          600
+David Brown                                                   1
+          700
+
+6 rows selected.
+
+SQL> select * from order_items;
+
+    ORDER#      ITEM#        QTY
+---------- ---------- ----------
+       101          1         10
+       102          2          5
+       103          3          8
+       104          4         12
+       105          5          7
+       106          6          9
+
+6 rows selected.
+
+SQL> UPDATE orders
+  2  SET ordamt = CASE
+  3      WHEN qty > 10 THEN ordamt * 0.9 -- Decrease by 10% if ordered quantity > 10
+  4      ELSE ordamt * 0.95 -- Decrease by 5% if ordered quantity <= 10
+  5  END
+  6  WHERE order# IN (
+  7      SELECT order#
+  8      FROM order_items
+  9      WHERE qty > 10
+ 10  );
+    WHEN qty > 10 THEN ordamt * 0.9 -- Decrease by 10% if ordered quantity > 10
+         *
+ERROR at line 3:
+ORA-00904: "QTY": invalid identifier
+
+
+SQL> UPDATE orders
+  2  SET ordamt =
+  3      CASE
+  4          WHEN EXISTS (SELECT 1 FROM order_items WHERE orders.order# = order_items.order# AND qty > 10) THEN ordamt * 0.9 -- Decrease by 10% if ordered quantity > 10
+  5          ELSE ordamt * 0.95 -- Decrease by 5% if ordered quantity <= 10
+  6      END;
+
+6 rows updated.
+
+SQL> select * from orders;
+
+    ORDER# ODATE          CUST#     ORDAMT
+---------- --------- ---------- ----------
+       101 10-APR-24          1        475
+       102 11-APR-24          2        713
+       103 12-APR-24          3        285
+       104 13-APR-24          4        405
+       105 14-APR-24          5        570
+       106 15-APR-24          6        665
+
+6 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from orders;
+
+    ORDER# ODATE          CUST#     ORDAMT
+---------- --------- ---------- ----------
+       101 10-APR-24          1        475
+       102 11-APR-24          2        713
+       103 12-APR-24          3        285
+       104 13-APR-24          4        405
+       105 14-APR-24          5        570
+       106 15-APR-24          6        665
+
+6 rows selected.
+
+SQL> select *
+  2  from customer
+  3  where cust# in(select cust#
+  4
+SQL> select cname
+  2  from customer natural join orders
+  3  where odate=to_date('2024-04-14','yyyy-mm-dd');
+
+CNAME
+--------------------------------------------------
+Emily Wilson
+
+SQL> -- Insert tuples into the item table
+SQL> INSERT INTO item (item#, unitprice) VALUES (7, 40); -- Item 7
+  2  INSERT INTO item (item#, unitprice) VALUES (8, 50); -- Item 8
+  3  INSERT INTO item (item#, unitprice) VALUES (9, 60); -- Item 9
+  4
+SQL> -- Insert tuples into the order_items table with the same order ID but different items
+SQL> INSERT INTO order_items VALUES (101, 7, 5); -- Order ID 101, Item 7, Quantity 5
+  2  INSERT INTO order_items VALUES (101, 8, 8); -- Order ID 101, Item 8, Quantity 8
+  3  INSERT INTO order_items VALUES (101, 9, 10); -- Order ID 101, Item 9, Quantity 10
+  4
+SQL> -- Insert tuples into the item table
+SQL> INSERT INTO item VALUES (7, 40);
+
+1 row created.
+
+SQL> INSERT INTO item VALUES (8, 50);
+
+1 row created.
+
+SQL> INSERT INTO item VALUES (9, 60);
+
+1 row created.
+
+SQL>
+SQL> -- Insert tuples into the order_items table with the same order ID but different items
+SQL> INSERT INTO order_items VALUES (101, 7, 5);
+
+1 row created.
+
+SQL> INSERT INTO order_items VALUES (101, 8, 8);
+
+1 row created.
+
+SQL> INSERT INTO order_items VALUES (101, 9, 10);
+
+1 row created.
+
+SQL> select order#, count(item#)
+  2  from order_items
+  3  group by order#;
+
+    ORDER# COUNT(ITEM#)
+---------- ------------
+       101            4
+       102            1
+       103            1
+       104            1
+       105            1
+       106            1
+
+6 rows selected.
+
+SQL> select order#
+  2  from order_items
+  3  group by order#
+  4  having count(item#)>=(select count(item#) from order_items group by order#);
+having count(item#)>=(select count(item#) from order_items group by order#)
+                      *
+ERROR at line 4:
+ORA-01427: single-row subquery returns more than one row
+
+
+SQL> select order#
+  2  from order_items
+  3  group by order#
+  4  having count(item#)>=some(select count(item#) from order_items group by order#);
+
+    ORDER#
+----------
+       101
+       102
+       103
+       104
+       105
+       106
+
+6 rows selected.
+
+SQL> select order#
+  2  from order_items
+  3  group by order#
+  4  having count(item#)>=all(select count(item#) from order_items group by order#);
+
+    ORDER#
+----------
+       101
+
+SQL> select odate
+  2  from orders
+  3  group by odate
+  4  having count(order#)>=all(select count(order#) from orders group by odate);
+
+ODATE
+---------
+10-APR-24
+11-APR-24
+12-APR-24
+13-APR-24
+14-APR-24
+15-APR-24
+
+6 rows selected.
+
+SQL> select shipdate
+  2      from shipment
+  3      group by shipdate
+  4      having count(order#)>=all(select count(order#) from shipment group by shipdate);
+
+SHIPDATE
+---------
+11-APR-24
+12-APR-24
+13-APR-24
+14-APR-24
+15-APR-24
+16-APR-24
+
+6 rows selected.
+
+SQL>  select cname from customer
+  2  where cname like '%Doe';
+
+CNAME
+--------------------------------------------------
+John Doe
+
+SQL> select cust#, sum(orderamt) as Tot_order_amt
+  2  from orders
+  3  group by cust#
+  4  order by Tot_order_amt desc;
+select cust#, sum(orderamt) as Tot_order_amt
+                  *
+ERROR at line 1:
+ORA-00904: "ORDERAMT": invalid identifier
+
+
+SQL> select cust#, sum(orderamt) as Tot_order_amt
+  2  from orders
+  3  group by cust#
+  4  order by Tot_order_amt desc;
+select cust#, sum(orderamt) as Tot_order_amt
+                  *
+ERROR at line 1:
+ORA-00904: "ORDERAMT": invalid identifier
+
+
+SQL> select cust#, sum(ordamt) as Tot_order_amt
+  2  from orders
+  3  group by cust#
+  4  order by Tot_order_amt desc;
+
+     CUST# TOT_ORDER_AMT
+---------- -------------
+         2           713
+         6           665
+         5           570
+         1           475
+         4           405
+         3           285
+
+6 rows selected.
+
+SQL> select cname
+  2
+SQL> commit;
+
