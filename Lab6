@@ -205,6 +205,7 @@ Location : Mumbai
 
 PL/SQL procedure successfully completed
 
+q6)
 create table mumbai(
 r_no int, accd_date date);
 
